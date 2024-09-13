@@ -18,7 +18,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
 
     if resource.errors.empty?
       set_flash_message!(:notice, :confirmed)
-      respond_with_navigational(resource){ redirect_to after_confirmation_path_for(resource_name, resource), allow_other_host: true }
+      respond_with_navigational(resource){ redirect_to ENV['FRONTEND_URL'], allow_other_host: true }
     else
       # TODO: use `error_status` when the default changes to `:unprocessable_entity`.
       respond_with_navigational(resource.errors, status: :unprocessable_entity){ render :new }
@@ -33,14 +33,11 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # end
 
   # The path used after confirmation.
-  def after_confirmation_path_for(resource_name, resource)
-    if signed_in?(resource_name)
-      puts 'condition true'
-      ENV['FRONTEND_URL']
-    else
-      puts 'condition false'
-      ENV['FRONTEND_URL']
-      new_session_path(resource_name)
-    end
-  end
+  # def after_confirmation_path_for(resource_name, resource)
+  #   if signed_in?(resource_name)
+  #     signed_in_root_path(resource)
+  #   else
+  #     new_session_path(resource_name)
+  #   end
+  # end
 end

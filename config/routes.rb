@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :auth_services
+  post 'auth/login'
+  post 'auth/register'
   devise_for :users, controllers: {
     confirmations: 'users/confirmations'
   }

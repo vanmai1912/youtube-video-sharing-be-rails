@@ -29,6 +29,7 @@ module Api
           )
     
           if youtube.persisted?
+            ActionCable.server.broadcast("notification_channel", { message: 'Video created successfully' })
             render json: { message: 'Video created successfully', status: :ok }, status: :ok
           else
             render json: { error: 'Failed to create video', status: :unprocessable_entity }, status: :unprocessable_entity

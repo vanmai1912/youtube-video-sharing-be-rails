@@ -15,6 +15,12 @@ gem "pg"
 
 gem 'devise'
 
+gem 'jwt'
+
+gem 'active_model_serializers'
+
+gem 'rack-cors'
+
 gem 'dotenv-rails'
 
 # Use the Puma web server [https://github.com/puma/puma]

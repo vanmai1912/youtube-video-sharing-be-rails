@@ -6,22 +6,39 @@ module Api
       page_number = params[:page].to_i > 0 ? params[:page].to_i : 1
       youtubes = Youtube.page(page_number).per(10)
       render json: {
-        data: youtubes,
+        data: ActiveModelSerializers::SerializableResource.new(youtubes, each_serializer: YoutubeSerializer).as_json,
         meta: {
           current_page: youtubes.current_page,
           total_pages: youtubes.total_pages,
           total_count: youtubes.total_count
-        }
-      }
+        },
+        status: :ok
+      }, status: :ok
     end
 
     def create
-      if params['video_url'].match?(YOUTUBE_URL_REGEX)
+      video_url = params['video_url']
+      if video_url.match?(YOUTUBE_URL_REGEX)
         craw = CrawlDataYoutube.new(video_url).fetch_video_info
-        render json: {
-          craw: craw,
-          status: :ok
-        }, status: :ok
+        if craw[:title].present?
+          youtube = Youtube.create(
+            title: craw[:title],
+            description: craw[:description],
+            image_url: craw[:thumbnail_url],
+            video_url: video_url
+          )
+    
+          if youtube.persisted?
+            render json: { message: 'Video created successfully', status: :ok }, status: :ok
+          else
+            render json: { error: 'Failed to create video', status: :unprocessable_entity }, status: :unprocessable_entity
+          end
+        else
+          render json: {
+            error: "Invalid YouTube URL path",
+            status: :unprocessable_entity
+          }, status: :unprocessable_entity
+        end
       else
         render json: {
           error: "Invalid YouTube URL format",

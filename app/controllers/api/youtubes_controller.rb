@@ -21,7 +21,7 @@ module Api
       if video_url.match?(YOUTUBE_URL_REGEX)
         craw = CrawlDataYoutube.new(video_url).fetch_video_info
         if craw[:title].present?
-          youtube = Youtube.create(
+          youtube = @current_user.youtubes.create(
             title: craw[:title],
             description: craw[:description],
             image_url: craw[:thumbnail_url],
@@ -29,7 +29,6 @@ module Api
           )
     
           if youtube.persisted?
-            ActionCable.server.broadcast("notification_channel", { message: 'Video created successfully' })
             render json: { message: 'Video created successfully', status: :ok }, status: :ok
           else
             render json: { error: 'Failed to create video', status: :unprocessable_entity }, status: :unprocessable_entity

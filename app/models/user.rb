@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true
   validates :last_name, presence: true
+  has_many :youtubes
 
   def generate_token
     payload = { user_id: self.id }

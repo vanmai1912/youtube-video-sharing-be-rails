@@ -79,6 +79,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.hosts << /.+\.trycloudflare.com/
+  config.hosts << "youtube-video-sharing-ngix.onrender.com"
 
   # SMTP settings for Gmail
   config.action_mailer.smtp_settings = {

@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: database_production
     ports:
-      - "5433:5432"
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -29,15 +29,14 @@ services:
       dockerfile: Dockerfile
     container_name: rails_app
     environment:
-      DATABASE_URL: postgres://username:password@db:5432/database
+      DATABASE_URL: postgres://username:password@db:5432/database_production?sslmode=disable
     ports:
       - "3000:3000"
     depends_on:
       - db
-      - redis
     volumes:
       - .:/myapp
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -b '0.0.0.0'"
 
   redis:
     image: redis:latest
@@ -45,7 +44,7 @@ services:
     ports:
       - "6380:6379"
     volumes:
-      - /path/to/local/dаta:/root/redis
+      - /path/to/local/data:/root/redis
       - /path/to/local/redis.conf:/usr/local/etc/redis/redis.conf
 
 volumes:

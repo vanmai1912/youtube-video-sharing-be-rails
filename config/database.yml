@@ -8,8 +8,8 @@ development:
   database: database_development
   username: <%= ENV.fetch("DATABASE_USERNAME", "username") %>
   password: <%= ENV.fetch("DATABASE_PASSWORD", "password") %>
-  port: <%= ENV.fetch("PORT", 5433) %>
-  host: <%= ENV.fetch("DATABASE_HOST", "localhost") %>
+  port: <%= ENV.fetch("PORT", 5432) %> 
+  host: <%= ENV.fetch("DATABASE_HOST", "db") %>
 
 test:
   <<: *default

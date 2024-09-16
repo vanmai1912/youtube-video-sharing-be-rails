@@ -21,4 +21,4 @@ COPY . /myapp
 EXPOSE 3000
 
 # Lệnh để khởi chạy ứng dụng Rails
-CMD ["bash", "-c", "rm -f tmp/pids/server.pid && bundle exec rails server -b '0.0.0.0'"]
+CMD ["bash", "-c", "rm -f tmp/pids/server.pid && bundle exec rails server"]

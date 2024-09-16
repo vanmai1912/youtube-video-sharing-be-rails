@@ -1,44 +1,35 @@
-# This configuration file will be evaluated by Puma. The top-level methods that
-# are invoked here are part of Puma's configuration DSL. For more information
-# about methods provided by the DSL, see https://puma.io/puma/Puma/DSL.html.
 
-# Puma can serve each request in a thread from an internal thread pool.
-# The `threads` method setting takes two numbers: a minimum and maximum.
-# Any libraries that use thread pools should be configured to match
-# the maximum value specified for Puma. Default is set to 5 threads for minimum
-# and maximum; this matches the default thread size of Active Record.
-max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
-min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
-threads min_threads_count, max_threads_count
+# config/puma.rb
 
-rails_env = ENV.fetch("RAILS_ENV") { "development" }
+# Specifies the number of worker processes.
+workers 2
 
-if rails_env == "production"
-  # If you are running more than 1 thread per process, the workers count
-  # should be equal to the number of processors (CPU cores) in production.
-  #
-  # It defaults to 1 because it's impossible to reliably detect how many
-  # CPU cores are available. Make sure to set the `WEB_CONCURRENCY` environment
-  # variable to match the number of processors.
-  worker_count = Integer(ENV.fetch("WEB_CONCURRENCY") { 1 })
-  if worker_count > 1
-    workers worker_count
-  else
-    preload_app!
-  end
-end
-# Specifies the `worker_timeout` threshold that Puma will use to wait before
-# terminating a worker in development environments.
-worker_timeout 3600 if ENV.fetch("RAILS_ENV", "development") == "development"
+# Specifies the number of threads per worker.
+threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
+threads threads_count, threads_count
 
-# Specifies the `port` that Puma will listen on to receive requests; default is 3000.
+# Specifies the port to listen on.
 port ENV.fetch("PORT") { 3000 }
 
-# Specifies the `environment` that Puma will run in.
-environment rails_env
+# Specifies the environment.
+environment ENV.fetch("RAILS_ENV") { "production" }
 
-# Specifies the `pidfile` that Puma will use.
-pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
+# Specifies the location of the PID file.
+pidfile ENV.fetch("PIDFILE") { "tmp/pids/puma.pid" }
 
-# Allow puma to be restarted by `bin/rails restart` command.
-plugin :tmp_restart
+# Specifies the location of the log file.
+stdout_redirect ENV.fetch("STDOUT_LOG") { "log/puma.stdout.log" },
+                ENV.fetch("STDERR_LOG") { "log/puma.stderr.log" }
+
+# Specifies the location of the socket file.
+# Uncomment if using UNIX socket (instead of TCP)
+# bind "unix://#{Rails.root}/tmp/sockets/puma.sock"
+
+# Preloads the application before forking workers.
+preload_app!
+
+# On worker boot, reconnect to ActiveRecord.
+on_worker_boot do
+  ActiveRecord::Base.establish_connection
+end
+

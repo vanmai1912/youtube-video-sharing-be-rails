@@ -87,11 +87,11 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.hosts << "youtube-video-sharing-ngix.onrender.com"
+  config.hosts << "youtube-video-sharing-be-rails.onrender.com"
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   config.hosts = [
-    "youtube-video-sharing-ngix.onrender.com",
+    "youtube-video-sharing-be-rails.onrender.com",
     "localhost:3000"
   ]
   # Skip DNS rebinding protection for the default health check endpoint.

@@ -21,7 +21,7 @@ test:
 
 production:
   <<: *default
-  database: database_production
+  database: youtube_video_db
   username: <%= ENV.fetch("DATABASE_USERNAME", "username") %>
   password: <%= ENV.fetch("DATABASE_PASSWORD", "password") %>
   host: <%= ENV.fetch("DATABASE_HOST", "db") %>

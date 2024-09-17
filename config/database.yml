@@ -9,14 +9,14 @@ development:
   username: <%= ENV.fetch("DATABASE_USERNAME", "username") %>
   password: <%= ENV.fetch("DATABASE_PASSWORD", "password") %>
   port: <%= ENV.fetch("PORT", 5432) %> 
-  host: <%= ENV.fetch("DATABASE_HOST", "db") %>
+  host: <%= ENV.fetch("DATABASE_HOST", "videodb") %>
 
 test:
   <<: *default
   database: database_test
   username: <%= ENV.fetch("DATABASE_USERNAME", "username") %>
   password: <%= ENV.fetch("DATABASE_PASSWORD", "password") %>
-  host: <%= ENV.fetch("DATABASE_HOST", "db") %>
+  host: <%= ENV.fetch("DATABASE_HOST", "videodb") %>
   port: <%= ENV.fetch("PORT", 5432) %>
 
 production:
@@ -24,6 +24,6 @@ production:
   database: database_production
   username: <%= ENV.fetch("DATABASE_USERNAME", "username") %>
   password: <%= ENV.fetch("DATABASE_PASSWORD", "password") %>
-  host: <%= ENV.fetch("DATABASE_HOST", "db") %>
+  host: <%= ENV.fetch("DATABASE_HOST", "videodb") %>
   port: <%= ENV.fetch("PORT", 5432) %>
 

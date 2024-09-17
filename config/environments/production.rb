@@ -44,6 +44,9 @@ Rails.application.configure do
   # config.action_cable.url = "wss://example.com/cable"
   # config.action_cable.allowed_request_origins = [ "http://example.com", /http:\/\/example.*/ ]
 
+  config.action_cable.url = 'wss://youtube-video-sharing-be-rails.onrender.com/cable'
+  config.action_cable.allowed_request_origins = [ 'https://youtube-video-sharing-be-rails.onrender.com', /https:\/\/youtube-video-sharing-be-rails.+\.onrender\.com/ ]
+
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   # Can be used together with config.force_ssl for Strict-Transport-Security and secure cookies.
   # config.assume_ssl = true
@@ -66,6 +69,7 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
+  config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter = :resque
@@ -90,10 +94,6 @@ Rails.application.configure do
   config.hosts << "youtube-video-sharing-be-rails.onrender.com"
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  config.hosts = [
-    "youtube-video-sharing-be-rails.onrender.com",
-    "localhost:3000"
-  ]
 
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",

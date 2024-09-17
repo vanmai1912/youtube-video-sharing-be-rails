@@ -115,6 +115,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    diff-lcs (1.5.1)
     domain_name (0.6.20240107)
     dotenv (3.1.2)
     dotenv-rails (3.1.2)
@@ -122,6 +123,13 @@ GEM
       railties (>= 6.1)
     drb (2.2.1)
     erubi (1.13.0)
+    factory_bot (6.5.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.4.3)
+      factory_bot (~> 6.4)
+      railties (>= 5.0.0)
+    faker (3.4.2)
+      i18n (>= 1.8.11, < 2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     http-cookie (1.0.7)
@@ -277,6 +285,23 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.3.7)
+    rspec-core (3.13.1)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-rails (7.0.1)
+      actionpack (>= 7.0)
+      activesupport (>= 7.0)
+      railties (>= 7.0)
+      rspec-core (~> 3.13)
+      rspec-expectations (~> 3.13)
+      rspec-mocks (~> 3.13)
+      rspec-support (~> 3.13)
+    rspec-support (3.13.1)
     rubyntlm (0.6.5)
       base64
     rubyzip (2.3.2)
@@ -286,6 +311,8 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    shoulda-matchers (6.4.0)
+      activesupport (>= 5.2.0)
     socket.io-rails (2.3.0)
       railties (>= 3.1)
     sprockets (4.2.1)
@@ -356,6 +383,8 @@ DEPENDENCIES
   debug
   devise
   dotenv-rails
+  factory_bot_rails
+  faker
   importmap-rails
   jbuilder
   jwt
@@ -367,7 +396,9 @@ DEPENDENCIES
   rack-cors
   rails (~> 7.1.4)
   redis (>= 4.0.1)
+  rspec-rails
   selenium-webdriver
+  shoulda-matchers
   socket.io-rails
   sprockets-rails
   sqlite3 (>= 1.4)
